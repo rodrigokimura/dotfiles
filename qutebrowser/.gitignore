@@ -1,0 +1,8 @@
+**/__pycache__/
+**/*.env
+*.pyc
+venv/
+qsettings/
+work/cache
+work/data
+work/runtime
