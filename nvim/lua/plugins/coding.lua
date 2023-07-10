@@ -28,7 +28,7 @@ return {
   },
   {
     "microsoft/vscode-js-debug",
-    build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && rm -rf out && mv dist out",
+    build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && rm -rf out && mv dist out && git reset --hard origin/main",
     branch = "main",
   },
   {
@@ -352,5 +352,13 @@ return {
         })
       end
     end,
+  },
+  -- formatting
+  {
+    "MunifTanjim/prettier.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+      "jose-elias-alvarez/null-ls.nvim",
+    },
   },
 }
