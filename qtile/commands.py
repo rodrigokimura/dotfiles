@@ -36,7 +36,7 @@ commands = [
     Command("chrome", "google-chrome-stable", "Launch Chrome"),
     Command(
         "edge",
-        'microsoft-edge-stable --proxy-server="http://192.168.0.119:8899;https://192.168.0.119:8899"',
+        'microsoft-edge-stable --proxy-server="http://192.168.0.120:8899;https://192.168.0.120:8899"',
         "Launch Edge using proxy",
     ),
     Command("postman", "postman", "Launch Postman"),
