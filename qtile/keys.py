@@ -157,6 +157,12 @@ _shortcut_keys = [
     ),
     Key(
         [Modifiers.META.value],
+        "r",
+        lazy.spawncmd(),
+        desc="Open file manager",
+    ),
+    Key(
+        [Modifiers.META.value],
         "m",
         lazy.run_extension(
             extension.CommandSet(

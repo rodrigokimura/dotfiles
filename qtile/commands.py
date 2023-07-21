@@ -24,7 +24,6 @@ work_browser_basedir = os.path.expanduser("~/.config/qutebrowser/work")
 work_browser = Command(
     "work browser",
     f"qutebrowser -C {work_browser_config} --basedir {work_browser_basedir}",
-    # f"{work_browser_venv} -C {work_browser_config} --basedir {work_browser_basedir}",
     "Launch qutebrowser",
 )
 

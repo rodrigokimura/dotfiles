@@ -1,6 +1,7 @@
 from libqtile import bar, widget
 from libqtile.config import Screen
 from libqtile.lazy import lazy
+from libqtile.widget.prompt import Prompt
 
 from colors import kanagawa
 from commands import open_calendar
@@ -142,6 +143,7 @@ def _main_screen():
                         background=kanagawa.base0D,
                         foreground=kanagawa.base00,
                     ),
+                    Prompt(prompt=" >_ "),
                     terminator_size=bottom_bar_size - 2,
                 ).widgets,
                 shared_task_list(),
