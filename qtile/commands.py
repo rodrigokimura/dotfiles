@@ -1,6 +1,8 @@
 import os
 from typing import NamedTuple
 
+proxy_address = "192.168.0.119:8899"
+
 
 class Command(NamedTuple):
     name: str
@@ -35,7 +37,7 @@ commands = [
     Command("chrome", "google-chrome-stable", "Launch Chrome"),
     Command(
         "edge",
-        'microsoft-edge-stable --proxy-server="http://192.168.0.120:8899;https://192.168.0.120:8899"',
+        f'microsoft-edge-stable --proxy-server="http://{proxy_address};https://{proxy_address}"',
         "Launch Edge using proxy",
     ),
     Command("postman", "postman", "Launch Postman"),
