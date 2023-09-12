@@ -50,6 +50,7 @@ commands = [
     Command("discord", "discord", "Launch Discord"),
     Command("audio", "pavucontrol -t 5", "Launch Audio Settings"),
     Command("spotify", "flatpak run com.spotify.Client", "Launch Spotify"),
+    Command("freecad", "freecad", "Launch Freecad"),
     open_calendar,
     open_telegram,
 ]
