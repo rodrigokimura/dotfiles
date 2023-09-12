@@ -18,6 +18,11 @@ open_calendar = Command(
     f"kitty -d {os.path.expanduser('~/dev/project_calendar/')} -e pipenv run textual run src/app.py",
     "Launch TUI calendar",
 )
+open_telegram = Command(
+    "telegram",
+    f"kitty -d {os.path.expanduser('~/dev/project_telegram/')} -e pipenv run textual run src/app.py",
+    "Launch TUI telegram",
+)
 
 work_browser_venv = os.path.expanduser("~/dev/qutebrowser/.venv-qt6/bin/qutebrowser")
 work_browser_config = os.path.expanduser("~/.config/qutebrowser/work_config.py")
@@ -46,4 +51,5 @@ commands = [
     Command("audio", "pavucontrol -t 5", "Launch Audio Settings"),
     Command("spotify", "flatpak run com.spotify.Client", "Launch Spotify"),
     open_calendar,
+    open_telegram,
 ]
