@@ -99,12 +99,11 @@ def generate_wallpapers(screens: Sequence[Screen]):
 
 
 def configure_monitors():
-    cmd = """
-    xrandr --output 'DisplayPort-0' --pos '0x0' --left-of 'HDMI-A-0'
-     --output 'HDMI-A-0' --pos '1920x0'
-     --output 'DVI-D-0' --pos '3840x0' --right-of 'HDMI-A-0'
+    cmd = """xrandr \
+    --output 'DisplayPort-0' --pos '0x0' --left-of 'HDMI-A-0' \
+    --output 'HDMI-A-0' --pos '1920x0' \
+    --output 'DVI-D-0' --pos '3840x0' --right-of 'HDMI-A-0'
     """
-    cmd = cmd.replace("\n", "")
     cwd = os.path.expanduser("~")
     CLICommand(
         cmd,
@@ -115,6 +114,8 @@ def configure_monitors():
 def start_compositor():
     subprocess.Popen("picom".split())
 
+def start_spotify_daemon():
+    subprocess.Popen("spotifyd".split())
 
 def start_virtual_webcam():
     base_command = "make run"

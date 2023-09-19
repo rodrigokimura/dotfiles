@@ -45,6 +45,7 @@ commands = [
         f'microsoft-edge-stable --proxy-server="http://{proxy_address};https://{proxy_address}"',
         "Launch Edge using proxy",
     ),
+    Command("firefox", "firefox", "Launch firefox"),
     Command("postman", "postman", "Launch Postman"),
     Command("slack", "slack", "Launch Slack"),
     Command("discord", "discord", "Launch Discord"),

@@ -11,6 +11,7 @@ from scripts import (
     connect_wifi,
     generate_wallpapers,
     start_compositor,
+    start_spotify_daemon,
     start_systray_menu,
     start_virtual_webcam,
 )
@@ -42,11 +43,7 @@ floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
         Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
         Match(wm_class="flameshot"),
     ],
@@ -64,6 +61,7 @@ def autostart(*args, **kwargs):
     configure_monitors()
     start_compositor()
     generate_wallpapers(screens)
+    start_spotify_daemon()
     start_virtual_webcam()
     start_systray_menu()
     # connect_bluetooth()
