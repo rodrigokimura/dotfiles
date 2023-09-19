@@ -100,7 +100,7 @@ def generate_wallpapers(screens: Sequence[Screen]):
 
 def configure_monitors():
     cmd = """
-    xrandr --output 'DisplayPort-0'--pos '0x0' --left-of 'HDMI-A-0'
+    xrandr --output 'DisplayPort-0' --pos '0x0' --left-of 'HDMI-A-0'
      --output 'HDMI-A-0' --pos '1920x0'
      --output 'DVI-D-0' --pos '3840x0' --right-of 'HDMI-A-0'
     """
