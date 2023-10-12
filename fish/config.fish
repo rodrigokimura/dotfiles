@@ -1,5 +1,7 @@
-if test -z "$DISPLAY" -a $XDG_VTNR = 1
-  exec startx
+if test -f "$DISPLAY"
+  if test "x$XDG_VTNR" == "x1"
+    exec startx
+  end
 end
 
 if status is-interactive
@@ -13,7 +15,7 @@ alias mkdir="mkdir -p"
 
 alias vi="nvim"
 alias vim="nvim"
-alias lvim="~/.local/bin/lvim"
+alias config="cd $HOME/.config && nvim"
 
 export EDITOR="nvim"
 
