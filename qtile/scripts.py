@@ -197,3 +197,6 @@ def start_calendar():
         base_command,
         cwd=cwd,
     )
+
+def load_env():
+    os.environ["WORK_PROXY_IP"] = "192.168.0.119"

@@ -4,12 +4,14 @@ from libqtile.config import Match
 from colors import kanagawa
 from keys import keys, mouse
 from layouts import layouts
+from ntfy import ntfy
 from screens import screens
 from scripts import (
     configure_monitors,
     connect_bluetooth,
     connect_wifi,
     generate_wallpapers,
+    load_env,
     start_compositor,
     start_spotify_daemon,
     start_systray_menu,
@@ -58,11 +60,13 @@ wmname = "qtile"
 
 @hook.subscribe.startup
 def autostart(*args, **kwargs):
+    load_env()
     configure_monitors()
     start_compositor()
     generate_wallpapers(screens)
     start_spotify_daemon()
     start_virtual_webcam()
     start_systray_menu()
+    ntfy("Turning on computer...", "From computer")
     # connect_bluetooth()
     # connect_wifi()

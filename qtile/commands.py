@@ -1,7 +1,7 @@
 import os
 from typing import NamedTuple
 
-proxy_address = "192.168.0.120:8899"
+proxy_address = "192.168.0.119:8899"
 
 
 class Command(NamedTuple):
@@ -46,6 +46,7 @@ commands = [
         "Launch Edge using proxy",
     ),
     Command("firefox", "firefox", "Launch firefox"),
+    Command("logseq", "logseq", "Launch Logseq"),
     Command("postman", "postman", "Launch Postman"),
     Command("slack", "slack", "Launch Slack"),
     Command("discord", "discord", "Launch Discord"),
