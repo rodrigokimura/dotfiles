@@ -1,7 +1,8 @@
-if test -f "$DISPLAY"
-  if test "x$XDG_VTNR" == "x1"
-    exec startx
-  end
+# Start X at login
+if status is-login
+    if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
+        exec startx -- -keeptty
+    end
 end
 
 if status is-interactive
@@ -11,6 +12,7 @@ end
 alias ..="cd .."
 alias ls="exa"
 alias x="exit"
+alias c="clear"
 alias mkdir="mkdir -p"
 
 alias vi="nvim"
