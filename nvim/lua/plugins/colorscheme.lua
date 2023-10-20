@@ -1,8 +1,9 @@
 return {
-  { "catppuccin/nvim", enabled = false },
+  { "catppuccin/nvim" },
   {
     "rebelot/kanagawa.nvim",
     opts = {
+      transparent = true,
       commentstyle = { italic = true },
       overrides = function(colors)
         return {
@@ -17,7 +18,19 @@ return {
     end,
   },
   {
-    "LazyVim/LazyVim",
-    colorscheme = "kanagawa",
+    "folke/tokyonight.nvim",
+    opts = {
+      transparent = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+    },
   },
+  -- {
+  --   "LazyVim/LazyVim",
+  --   opts = {
+  --     colorscheme = "tokyonight",
+  --   },
+  -- },
 }
