@@ -2,11 +2,12 @@ import math
 import subprocess
 from typing import Any, Iterable, List, Tuple, Union
 
-from libqtile import bar, hook, widget
+from libqtile import bar, hook
 from libqtile.widget import base
 from libqtile.widget.base import _Widget
 from libqtile.widget.currentscreen import CurrentScreen as BuiltinCurrentScreen
 from libqtile.widget.generic_poll_text import GenPollText
+from libqtile.widget.tasklist import TaskList
 from libqtile.widget.textbox import TextBox
 from libqtile.widget.volume import Volume as BuiltinVolume
 
@@ -324,7 +325,7 @@ def _parse_text(text: str):
 
 
 def shared_task_list():
-    return widget.TaskList(
+    return TaskList(
         parse_text=_parse_text,
         background=kanagawa.base00,
         foreground=kanagawa.base05,

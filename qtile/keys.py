@@ -51,6 +51,12 @@ _focus_keys = [
         lazy.layout.next(),
         desc="Move window focus to other window",
     ),
+    Key(
+        [Modifiers.META.value, Modifiers.SHIFT.value],
+        "m",
+        lazy.group.unminimize_all(),
+        desc="Unminimize all windows",
+    ),
 ]
 
 _move_keys = [
