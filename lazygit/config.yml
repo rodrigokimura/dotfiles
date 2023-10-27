@@ -1,0 +1,45 @@
+gui:
+  windowSize: normal
+  scrollHeight: 2
+  scrollPastBottom: true
+  sidePanelWidth: 0.3333
+  expandFocusedSidePanel: false
+  mainPanelSplitMode: flexible
+  language: auto
+  timeFormat: "02 Jan 06"
+  shortTimeFormat: "3:04PM"
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  showFileTree: true
+  showListFooter: true
+  showRandomTip: true
+  showBranchCommitHash: false
+  showBottomLine: false
+  showCommandLog: true
+  nerdFontsVersion: "3"
+  commandLogSize: 8
+  splitDiff: auto
+  skipRewordInEditorWarning: false
+  border: rounded
+  animateExplosion: true
+git:
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  fetchAll: true
+  branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName} --}
+  allBranchesLogCmd: git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
+  overrideGpg: false
+  disableForcePushing: false
+  parseEmoji: true
+  diffContextSize: 3
+os:
+  copyToClipboardCmd: ""
+  editPreset: nvim
+  edit: ""
+  editAtLine: ""
+  editAtLineAndWait: ""
+  open: ""
+  openLink: ""
+promptToReturnFromSubprocess: false
