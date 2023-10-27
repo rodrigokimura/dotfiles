@@ -3,7 +3,7 @@ gui:
   scrollHeight: 2
   scrollPastBottom: true
   sidePanelWidth: 0.3333
-  expandFocusedSidePanel: false
+  expandFocusedSidePanel: true
   mainPanelSplitMode: flexible
   language: auto
   timeFormat: "02 Jan 06"
@@ -16,7 +16,7 @@ gui:
   showRandomTip: true
   showBranchCommitHash: false
   showBottomLine: false
-  showCommandLog: true
+  showCommandLog: false
   nerdFontsVersion: "3"
   commandLogSize: 8
   splitDiff: auto
@@ -42,4 +42,5 @@ os:
   editAtLineAndWait: ""
   open: ""
   openLink: ""
+quitOnTopLevelReturn: true
 promptToReturnFromSubprocess: false
