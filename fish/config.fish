@@ -9,11 +9,16 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-alias r="ranger"
-alias ..="cd .."
-alias ls="exa"
 alias x="exit"
 alias c="clear"
+
+alias r="ranger"
+alias n="nvim"
+alias v="nvim"
+
+alias ..="cd .."
+
+alias ls="exa"
 alias mkdir="mkdir -p"
 
 alias vi="nvim"
