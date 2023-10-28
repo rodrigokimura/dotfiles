@@ -6,9 +6,10 @@ if status is-login
 end
 
 if status is-interactive
-  # Commands to run in interactive sessions can go here
+    # Commands to run in interactive sessions can go here
 end
 
+alias r="ranger"
 alias ..="cd .."
 alias ls="exa"
 alias x="exit"
