@@ -1,6 +1,50 @@
 from __future__ import absolute_import, division, print_function
+
 import os
+
 from ranger.api.commands import Command
+
+
+class Env(Command):
+    name = "env"
+
+    def execute(self):
+        env = self.rest(1)
+        if env in os.environ:
+            self.fm.notify(f"{env}: {os.environ[env]}")
+        else:
+            self.fm.notify("Not found", bad=True)
+        return
+
+    def tab(self, tabnum):
+        envs = (e for e in os.environ if e.startswith(self.rest(1)))
+        return (self.start(1) + e for e in envs)
+
+
+class Ntfy(Command):
+    name = "ntfy"
+
+    def execute(self):
+        import requests
+        from dotenv import load_dotenv
+
+        load_dotenv()
+        token = os.getenv("NTFY_TOKEN")
+
+        url = "https://ntfy.rodrigokimura.com/test"
+        data = self.rest(1).strip()
+        if not data:
+            self.fm.notify("No message", bad=True)
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Title": "From ranger",
+            "Priority": "high",
+        }
+        response = requests.post(url, data, headers=headers)
+        if response.ok:
+            self.fm.notify("Sent!")
+        else:
+            self.fm.notify(f"Error: {response.content.decode()}")
 
 
 class my_edit(Command):
