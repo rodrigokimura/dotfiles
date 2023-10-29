@@ -36,3 +36,5 @@ eval "$(pyenv virtualenv-init -)" # Enabling virtualenv so it works natively.
 source ~/.config/fish/kanagawa.fish
 
 [ -s "/home/rodrigokimura/.jabba/jabba.fish" ]; and source "/home/rodrigokimura/.jabba/jabba.fish"
+
+greet
