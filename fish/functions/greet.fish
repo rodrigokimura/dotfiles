@@ -2,6 +2,8 @@ function greet
     set -lx GREETING
     if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]
         set GREETING Welcome remote user
+    else
+        set GREETING Hello World
     end
     set -lx PIPENV_PIPFILE $HOME/dev/project_greetings/Pipfile
     pipenv run python $HOME/dev/project_greetings/src/app.py
