@@ -34,8 +34,10 @@ def focus_next_window(group: _Group):
 
 
 def focus_window(group: _Group, next_: bool = True):
+    windows = get_windows_as_shown_in_task_list(group)
+    if not windows:
+        return (-1, 1)[next_]
     if (window := group.current_window) and isinstance(window, Window):
-        windows = get_windows_as_shown_in_task_list(group)
         idx = windows.index(window) + (1 if next_ else -1)
         if idx < 0:
             return -1
@@ -50,15 +52,19 @@ def focus_window(group: _Group, next_: bool = True):
 class Columns(columns.Columns):
     @expose_command()
     def shuffle_up(self):
-        if window := self.cc.cw:
-            if window.minimized:
-                notify("Unminimizing window")
-                window.toggle_minimize()
-                return
+        if (
+            (window := self.group.current_window)
+            and isinstance(window, Window)
+            and window.minimized
+        ):
+            notify("Unminimizing window")
+            window.toggle_minimize()
+        elif window := self.cc.cw:
             window.hide()
             if not self.cc.current_index > 0:
                 notify("Already at top")
             else:
+                notify("Shuffle up")
                 super().shuffle_up()
             window.unhide()
 
@@ -72,13 +78,13 @@ class Columns(columns.Columns):
                     window.toggle_minimize()
                     return
             else:
+                notify("Shuffle down")
                 super().shuffle_down()
             window.unhide()
 
     @expose_command()
     def shuffle_left(self):
         if window := self.cc.cw:
-            notify("Shuffle left")
             window.hide()
             self._shuffle_left(window)
             window.unhide()
@@ -91,15 +97,17 @@ class Columns(columns.Columns):
             try:
                 window.toscreen(screen_idx)
                 window.qtile.focus_screen(screen_idx, False)
+                notify("Move left")
             except (IndexError, CommandError):
                 return
             return
+
+        notify("Shuffle left")
         super().shuffle_left()
 
     @expose_command()
     def shuffle_right(self):
         if window := self.cc.cw:
-            notify("Shuffle right")
             window.hide()
             self._shuffle_right(window)
             window.unhide()
@@ -110,9 +118,11 @@ class Columns(columns.Columns):
             try:
                 window.toscreen(screen_idx)
                 window.qtile.focus_screen(screen_idx, False)
+                notify("Move right")
             except (IndexError, CommandError):
                 return
             return
+        notify("Shuffle right")
         super().shuffle_right()
 
     @expose_command()
@@ -162,6 +172,7 @@ class Max(max.Max):
             try:
                 client.toscreen(screen_idx)
                 client.qtile.focus_screen(screen_idx, False)
+                notify("Move left")
             except (IndexError, CommandError):
                 return
             return
@@ -174,6 +185,7 @@ class Max(max.Max):
             try:
                 client.toscreen(screen_idx)
                 client.qtile.focus_screen(screen_idx, False)
+                notify("Move right")
             except (IndexError, CommandError):
                 return
             return

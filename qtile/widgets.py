@@ -2,10 +2,11 @@ import subprocess
 from typing import Generic, TypeVar
 
 from libqtile import bar, hook
+from libqtile.backend.base.window import Window
 from libqtile.widget import base
 from libqtile.widget.currentscreen import CurrentScreen as BuiltinCurrentScreen
 from libqtile.widget.generic_poll_text import GenPollText
-from libqtile.widget.tasklist import TaskList
+from libqtile.widget.tasklist import TaskList as _TaskList
 from libqtile.widget.volume import Volume as BuiltinVolume
 from qtile_extras.widget import modify as _mod
 
@@ -14,6 +15,38 @@ from decorations import POWERLINE_RIGHT
 from scripts import decrease_volume, increase_volume, toggle_audio_profile
 
 T = TypeVar("T")
+
+
+class TaskList(_TaskList):
+    def __init__(self, **config):
+        super().__init__(**config)
+        self.add_callbacks(
+            {
+                "Button2": self.close_window,
+                "Button4": self.previous_window,
+                "Button5": self.next_window,
+            }
+        )
+
+    def close_window(self):
+        if (window := self.clicked) and isinstance(window, Window):
+            window.kill()
+
+    def next_window(self):
+        self._select_window(next_=True)
+
+    def previous_window(self):
+        self._select_window(next_=False)
+
+    def _select_window(self, next_=True):
+        current_win = self.bar.screen.group.current_window
+        index = self.windows.index(current_win) + (-1, 1)[next_]
+        if 0 <= index < len(self.windows):
+            window: Window = self.windows[index]
+            if window.group:
+                window.group.focus(window, False)
+            if window.floating:
+                window.bring_to_front()
 
 
 class Mod(Generic[T]):
@@ -177,11 +210,11 @@ def shared_task_list():
         highlight_method="border",
         rounded=True,
         icon_size=0,
-        margin_x=3,
-        margin_y=1,
-        max_title_width=150,
+        # margin_x=3,
+        # margin_y=1,
+        # max_title_width=150,
         title_width_method="uniform",
-        width=200,
+        width=bar.CALCULATED,
         borderwidth=2,
         border=kanagawa.base09,
         unfocused_border=kanagawa.base03,

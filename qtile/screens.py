@@ -1,8 +1,8 @@
 from libqtile import bar
 from libqtile.config import Screen
 from libqtile.lazy import lazy
-from libqtile.widget.currentscreen import CurrentScreen
 from libqtile.widget.prompt import Prompt
+from libqtile.widget.currentscreen import CurrentScreen
 from qtile_extras import widget
 from qtile_extras.widget import Bluetooth
 from qtile_extras.widget.network import WiFiIcon
@@ -134,7 +134,11 @@ def _main_screen():
                     max_width=20,
                     **POWERLINE_LEFT,
                 ),
+                widget.Spacer(),
                 shared_task_list(),
+                widget.Spacer(
+                    **POWERLINE_RIGHT,
+                ),
                 widget.Clock(
                     format="%d/%m/%Y %H:%M ",
                     background=kanagawa.base0D,
@@ -169,8 +173,9 @@ def _secondary_screen_left():
                     foreground=kanagawa.base00,
                     **POWERLINE_LEFT,
                 ),
+                widget.Spacer(),
                 shared_task_list(),
-                widget.Spacer(bar.STRETCH),
+                widget.Spacer(),
             ],
             size=bottom_bar_size,
             background=kanagawa.base00,
@@ -201,6 +206,7 @@ def _secondary_screen_right():
                     foreground=kanagawa.base00,
                     **POWERLINE_LEFT,
                 ),
+                widget.Spacer(),
                 shared_task_list(),
                 widget.Spacer(),
             ],
