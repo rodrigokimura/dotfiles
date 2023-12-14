@@ -1,7 +1,7 @@
 import os
 from typing import NamedTuple
 
-proxy_address = "192.168.0.119:8899"
+proxy_address = "192.168.0.120:8899"
 
 
 class Command(NamedTuple):

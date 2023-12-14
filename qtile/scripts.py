@@ -95,7 +95,8 @@ def generate_wallpapers(screens: Sequence[Screen]):
     commands.wait()
 
     for index, screen in enumerate(screens, start=1):
-        screen.cmd_set_wallpaper(f"{CUR_DIR}/wallpapers/wp{index}.png", mode="fill")
+        if screen.cmd_set_wallpaper:
+            screen.cmd_set_wallpaper(f"{CUR_DIR}/wallpapers/wp{index}.png", mode="fill")
 
 
 def configure_monitors():
@@ -114,8 +115,10 @@ def configure_monitors():
 def start_compositor():
     subprocess.Popen("picom".split())
 
+
 def start_spotify_daemon():
     subprocess.Popen("spotifyd".split())
+
 
 def start_virtual_webcam():
     base_command = "make run"
@@ -198,5 +201,6 @@ def start_calendar():
         cwd=cwd,
     )
 
+
 def load_env():
-    os.environ["WORK_PROXY_IP"] = "192.168.0.119"
+    os.environ["WORK_PROXY_IP"] = "192.168.0.120"

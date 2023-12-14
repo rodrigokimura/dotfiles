@@ -1,17 +1,11 @@
-from typing import Any
-
 from libqtile.backend.base.window import Window
 from libqtile.command.base import CommandError, expose_command
 from libqtile.core.manager import Qtile
 from libqtile.group import _Group
 from libqtile.layout import columns, max
-from libqtile.utils import send_notification
 
 from colors import kanagawa
-
-
-def notify(msg: Any):
-    send_notification("Qtile", str(msg), timeout=1000)
+from utils import notify
 
 
 def focus_left_screen(qtile):

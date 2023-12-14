@@ -1,5 +1,6 @@
-from libqtile import hook, layout
+from libqtile import hook
 from libqtile.config import Match
+from libqtile.layout.floating import Floating
 
 from colors import kanagawa
 from keys import keys, mouse
@@ -7,16 +8,13 @@ from layouts import layouts
 from ntfy import ntfy
 from screens import screens
 from scripts import (
-    configure_monitors,
-    connect_bluetooth,
-    connect_wifi,
     generate_wallpapers,
     load_env,
     start_compositor,
-    start_spotify_daemon,
     start_systray_menu,
     start_virtual_webcam,
 )
+from utils import notify
 
 keys = keys
 mouse = mouse
@@ -39,12 +37,12 @@ dgroups_app_rules = []  # type: list
 follow_mouse_focus = False
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(
+floating_layout = Floating(
     border_focus=kanagawa.base0C,
     border_normal=kanagawa.base0D,
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
+        *Floating.default_float_rules,
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="pinentry"),  # GPG key password entry
         Match(wm_class="flameshot"),
@@ -59,14 +57,12 @@ wmname = "qtile"
 
 
 @hook.subscribe.startup
-def autostart(*args, **kwargs):
+def autostart():
+    notify("Starting Qtile...")
     load_env()
-    configure_monitors()
     start_compositor()
     generate_wallpapers(screens)
-    start_spotify_daemon()
     start_virtual_webcam()
     start_systray_menu()
+    # start_spotify_daemon()
     ntfy("Turning on computer...", "From computer")
-    # connect_bluetooth()
-    # connect_wifi()

@@ -1,28 +1,39 @@
-import math
 import subprocess
-from typing import Any, Iterable, List, Tuple, Union
+from typing import Generic, TypeVar
 
 from libqtile import bar, hook
 from libqtile.widget import base
-from libqtile.widget.base import _Widget
 from libqtile.widget.currentscreen import CurrentScreen as BuiltinCurrentScreen
 from libqtile.widget.generic_poll_text import GenPollText
 from libqtile.widget.tasklist import TaskList
-from libqtile.widget.textbox import TextBox
 from libqtile.widget.volume import Volume as BuiltinVolume
+from qtile_extras.widget import modify as _mod
 
 from colors import kanagawa
+from decorations import POWERLINE_RIGHT
 from scripts import decrease_volume, increase_volume, toggle_audio_profile
+from utils import notify
+
+T = TypeVar("T")
 
 
-class CurrentLayout(base._TextBox):
+class Mod(Generic[T]):
+    def __init__(self, widget_class: type[T]) -> None:
+        self.widget_class = widget_class
+        super().__init__()
+
+    def __call__(self, *args, initialise=True, **config) -> T:
+        return _mod(self.widget_class, *args, initialise=initialise, **config)  # type: ignore
+
+
+class CurrentLayout(base._TextBox, base._Widget):
     """
     Display the name of the current layout of the current group of the screen,
     the bar containing the widget, is on.
     """
 
     def __init__(self, width=bar.CALCULATED, **config):
-        base._TextBox.__init__(self, "", width, **config)
+        super().__init__("", width, **config)
         self._icon_mapping = {
             "max": "󰁌",
             "columns": "",
@@ -30,7 +41,7 @@ class CurrentLayout(base._TextBox):
         self._fallback_icon = ""
 
     def _configure(self, qtile, bar):
-        base._TextBox._configure(self, qtile, bar)
+        super()._configure(qtile, bar)
         layout_id = self.bar.screen.group.current_layout
         self.text = self._icon_mapping.get(
             self.bar.screen.group.layouts[layout_id].name, self._fallback_icon
@@ -79,88 +90,15 @@ class CurrentScreen(BuiltinCurrentScreen):
 
     def update_text(self):
         super().update_text()
-        if self.qtile.current_screen == self.bar.screen:
-            self.background = self.active_background_color
+        a = self.qtile.current_screen.index
+        b = self.bar.screen.index
+        notify(f"{a} == {b}")
+        if self.qtile.current_screen.index == self.bar.screen.index:
+            self.foreground = self.active_background_color
             self.update(self.active_text)
         else:
-            self.background = self.inactive_background_color
+            self.foreground = self.inactive_background_color
             self.update(self.inactive_text)
-        self.draw()
-
-
-class Terminator(TextBox):
-    def __init__(self, hack_offset: int = -1, **config: Any) -> None:
-        super().__init__(**config)
-        self.hack_offset = hack_offset
-
-    def draw(self):
-        if not self.can_draw():
-            return
-        self.drawer.clear(self.background or self.bar.background)
-
-        # size = self.bar.height if self.bar.horizontal else self.bar.width
-        self.drawer.ctx.save()
-
-        if not self.bar.horizontal:
-            # Left bar reads bottom to top
-            if self.bar.screen.left is self.bar:
-                self.drawer.ctx.rotate(-90 * math.pi / 180.0)
-                self.drawer.ctx.translate(-self.length, 0)
-
-            # Right bar is top to bottom
-            else:
-                self.drawer.ctx.translate(self.bar.width, 0)
-
-                self.drawer.ctx.rotate(90 * math.pi / 180.0)
-
-        size = self.bar.height if self.bar.horizontal else self.bar.width
-
-        self.layout.draw(
-            (self.actual_padding or 0) - self._scroll_offset,
-            int(size / 2.0 - self.layout.height / 2.0) + self.hack_offset,
-        )
-        self.drawer.ctx.restore()
-
-        self.drawer.draw(
-            # offsetx=self.offsetx, offsety=self.offsety - HACK_OFFSET, width=self.width, height=self.height + (HACK_OFFSET * 2)
-            offsetx=self.offsetx,
-            offsety=self.offsety,
-            width=self.width,
-            height=self.height,
-        )
-
-        # We only want to scroll if:
-        # - User has asked us to scroll and the scroll width is smaller than the layout (should_scroll=True)
-        # - We are still scrolling (is_scrolling=True)
-        # - We haven't already queued the next scroll (scroll_queued=False)
-        if self._should_scroll and self._is_scrolling and not self._scroll_queued:
-            self._scroll_queued = True
-            if self._scroll_offset == 0:
-                interval = self.scroll_delay
-            else:
-                interval = self.scroll_interval
-            self._scroll_timer = self.timeout_add(interval, self.do_scroll)
-
-
-class DynamicTerminator(Terminator):
-    def __init__(self, active_foreground: str, **config: Any):
-        super().__init__(**config)
-        self.active_foreground = active_foreground
-        self.inactive_foreground = self.foreground
-
-    def draw(self):
-        super().draw()
-
-    def _configure(self, qtile, bar):
-        base._TextBox._configure(self, qtile, bar)
-        hook.subscribe.current_screen_change(self.update_text)
-        self.update_text()
-
-    def update_text(self):
-        if self.qtile.current_screen == self.bar.screen:
-            self.foreground = self.active_foreground
-        else:
-            self.foreground = self.inactive_foreground
         self.draw()
 
 
@@ -210,101 +148,12 @@ class Volume(BuiltinVolume):
         full_block = "█"
         empty_block = "▓"
         progress_bar = (
-            int(self.volume / 10) * full_block
-            + (10 - int(self.volume / 10)) * empty_block
+            int(self.volume or 0 / 10) * full_block
+            + (10 - int(self.volume or 0 / 10)) * empty_block
         )
         self.text = f" {progress_bar} {str(self.volume).rjust(3)}%"
 
-        subprocess.Popen(["dunstify", f"Volume: ", "-h", f"int:value:{self.volume}"])
-
-
-def left_terminator(foreground, background, fontsize=26):
-    return Terminator(
-        fmt="",
-        foreground=foreground,
-        background=background,
-        fontsize=fontsize,
-        padding=0,
-        markup=False,
-        hack_offset=-1,
-        font="MesloLGS NF",
-    )
-
-
-def right_terminator(foreground, background, fontsize=26):
-    return Terminator(
-        fmt="",
-        foreground=foreground,
-        background=background,
-        fontsize=fontsize,
-        padding=0,
-        markup=False,
-        hack_offset=0,
-        font="MesloLGS NF",
-    )
-
-
-class RightPowerline:
-    def __init__(
-        self,
-        *widgets: List[_Widget],
-        terminator_size: int = 24,
-        background: str = kanagawa.base00,
-    ) -> None:
-        self._widgets = []
-        first = widgets[0]
-        self._widgets.append(
-            left_terminator(first.background, background, terminator_size)
-        )
-        for i in range(len(widgets)):
-            current = widgets[i]
-            self._widgets.append(current)
-            if i == len(widgets) - 1:
-                break
-            next = widgets[i + 1]
-            self._widgets.append(
-                left_terminator(next.background, current.background, terminator_size)
-            )
-
-    @property
-    def widgets(self) -> List[_Widget]:
-        return self._widgets
-
-
-class LeftPowerline:
-    def __init__(
-        self,
-        *widgets: Union[_Widget, Tuple[_Widget, ...]],
-        terminator_size: int = 24,
-        background: str = kanagawa.base00,
-    ) -> None:
-        self._widgets = []
-        for i in range(len(widgets)):
-            current = widgets[i]
-            if isinstance(current, Iterable):
-                current = current[0]
-                for w in widgets[i]:
-                    self._widgets.append(w)
-            else:
-                self._widgets.append(current)
-            if i == len(widgets) - 1:
-                break
-            next = widgets[i + 1]
-            if isinstance(next, Iterable):
-                next = next[0]
-            self._widgets.append(
-                right_terminator(current.background, next.background, terminator_size)
-            )
-        last = widgets[-1]
-        if isinstance(last, Iterable):
-            last = last[-1]
-        self._widgets.append(
-            right_terminator(last.background, background, terminator_size)
-        )
-
-    @property
-    def widgets(self) -> List[_Widget]:
-        return self._widgets
+        subprocess.Popen(["dunstify", "Volume: ", "-h", f"int:value:{self.volume}"])
 
 
 def _parse_text(text: str):
@@ -325,7 +174,7 @@ def _parse_text(text: str):
 
 
 def shared_task_list():
-    return TaskList(
+    return Mod(TaskList)(
         parse_text=_parse_text,
         background=kanagawa.base00,
         foreground=kanagawa.base05,
@@ -340,4 +189,5 @@ def shared_task_list():
         borderwidth=2,
         border=kanagawa.base09,
         unfocused_border=kanagawa.base03,
+        **POWERLINE_RIGHT,
     )
