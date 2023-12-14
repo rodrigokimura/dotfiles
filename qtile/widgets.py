@@ -12,7 +12,6 @@ from qtile_extras.widget import modify as _mod
 from colors import kanagawa
 from decorations import POWERLINE_RIGHT
 from scripts import decrease_volume, increase_volume, toggle_audio_profile
-from utils import notify
 
 T = TypeVar("T")
 
@@ -90,9 +89,6 @@ class CurrentScreen(BuiltinCurrentScreen):
 
     def update_text(self):
         super().update_text()
-        a = self.qtile.current_screen.index
-        b = self.bar.screen.index
-        notify(f"{a} == {b}")
         if self.qtile.current_screen.index == self.bar.screen.index:
             self.foreground = self.active_background_color
             self.update(self.active_text)

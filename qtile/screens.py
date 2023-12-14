@@ -1,6 +1,7 @@
 from libqtile import bar
 from libqtile.config import Screen
 from libqtile.lazy import lazy
+from libqtile.widget.currentscreen import CurrentScreen
 from libqtile.widget.prompt import Prompt
 from qtile_extras import widget
 from qtile_extras.widget import Bluetooth
@@ -10,7 +11,7 @@ from colors import kanagawa
 from commands import open_calendar
 from decorations import POWERLINE_LEFT, POWERLINE_RIGHT
 from meta_config import BLUETOOTH_DEVICE, TERMINAL
-from widgets import CurrentLayout, CurrentScreen, Mod, shared_task_list
+from widgets import CurrentLayout, Mod, shared_task_list
 
 
 def _main_screen():
@@ -109,10 +110,8 @@ def _main_screen():
                     fmt=" {}",
                     active_text="⬤",
                     inactive_text="◯",
-                    active_color=kanagawa.base00,
-                    inactive_color=kanagawa.base00,
-                    active_background_color=kanagawa.base00,
-                    inactive_background_color=kanagawa.base0C,
+                    active_color=kanagawa.base02,
+                    inactive_color=kanagawa.base0D,
                     background=kanagawa.base0C,
                     foreground=kanagawa.base00,
                     **POWERLINE_LEFT,
@@ -157,10 +156,8 @@ def _secondary_screen_left():
                     fmt=" {}",
                     active_text="⬤",
                     inactive_text="◯",
-                    active_color=kanagawa.base00,
-                    inactive_color=kanagawa.base00,
-                    active_background_color=kanagawa.base00,
-                    inactive_background_color=kanagawa.base0C,
+                    active_color=kanagawa.base02,
+                    inactive_color=kanagawa.base0D,
                     background=kanagawa.base0C,
                     foreground=kanagawa.base00,
                     **POWERLINE_LEFT,
@@ -190,10 +187,8 @@ def _secondary_screen_right():
                     fmt=" {}",
                     active_text="⬤",
                     inactive_text="◯",
-                    active_color=kanagawa.base00,
-                    inactive_color=kanagawa.base00,
-                    active_background_color=kanagawa.base00,
-                    inactive_background_color=kanagawa.base0C,
+                    active_color=kanagawa.base02,
+                    inactive_color=kanagawa.base0D,
                     background=kanagawa.base0C,
                     foreground=kanagawa.base00,
                     **POWERLINE_LEFT,
