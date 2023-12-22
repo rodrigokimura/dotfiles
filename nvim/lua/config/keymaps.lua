@@ -1,19 +1,17 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
 
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.api.nvim_create_user_command("LazyTerm", function(opts)
   local Util = require("lazyvim.util")
-  print(opts.count)
-  Util.terminal(nil, { cwd = Util.root() })
+  print(string.format("LazyTerm #%s", opts.count))
+  Util.terminal(nil, { cwd = Util.root(), env = { LAZYTERM_COUNT = opts.count } })
 end, { count = 1 })
 
 for i = 1, 5, 1 do
   vim.keymap.set(
     { "n", "t" },
     string.format("<A-%s>", i),
-    string.format("<cmd>%sLazyTerm<cr>", i),
+    string.format("<cmd> %sLazyTerm <cr>", i),
     { desc = "Open terminal" }
   )
 end
