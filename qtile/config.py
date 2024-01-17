@@ -5,16 +5,9 @@ from libqtile.layout.floating import Floating
 from colors import kanagawa
 from keys import keys, mouse
 from layouts import layouts
-from ntfy import ntfy
 from screens import screens
-from scripts import (
-    generate_wallpapers,
-    load_env,
-    start_compositor,
-    start_systray_menu,
-    start_virtual_webcam,
-)
-from utils import notify
+from scripts import generate_wallpapers, load_env, start_compositor
+from utils import notify, send_home_assistant_event
 
 keys = keys
 mouse = mouse
@@ -62,7 +55,4 @@ def autostart():
     load_env()
     start_compositor()
     generate_wallpapers(screens)
-    start_virtual_webcam()
-    start_systray_menu()
-    # start_spotify_daemon()
-    ntfy("Turning on computer...", "From computer")
+    send_home_assistant_event("computer_turned_on")

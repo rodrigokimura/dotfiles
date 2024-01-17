@@ -1,8 +1,8 @@
 from libqtile import bar
 from libqtile.config import Screen
 from libqtile.lazy import lazy
-from libqtile.widget.prompt import Prompt
 from libqtile.widget.currentscreen import CurrentScreen
+from libqtile.widget.prompt import Prompt
 from qtile_extras import widget
 from qtile_extras.widget import Bluetooth
 from qtile_extras.widget.network import WiFiIcon
@@ -12,6 +12,7 @@ from commands import open_calendar
 from decorations import POWERLINE_LEFT, POWERLINE_RIGHT
 from meta_config import BLUETOOTH_DEVICE, TERMINAL
 from widgets import CurrentLayout, Mod, shared_task_list
+from widgets import GenericVolume as Volume
 
 
 def _main_screen():
@@ -31,7 +32,6 @@ def _main_screen():
                     format=" {load_percent:.1f}%",
                     background=kanagawa.base02,
                     mouse_callbacks={"Button1": lazy.spawn(TERMINAL + " -e bashtop")},
-                    **POWERLINE_LEFT,
                 ),
                 widget.CPUGraph(
                     type="line",
@@ -47,7 +47,6 @@ def _main_screen():
                     format=" {MemPercent:.1f}%",
                     background=kanagawa.base01,
                     mouse_callbacks={"Button1": lazy.spawn(TERMINAL + " -e bashtop")},
-                    **POWERLINE_LEFT,
                 ),
                 widget.MemoryGraph(
                     type="line",
@@ -60,9 +59,8 @@ def _main_screen():
                     **POWERLINE_LEFT,
                 ),
                 widget.Net(
-                    format=" {down} \u2193\u2191 {up}",
+                    format="{down:.1f}{down_suffix} ↓↑ {up:.1f}{up_suffix}",
                     background=kanagawa.base02,
-                    **POWERLINE_LEFT,
                 ),
                 widget.NetGraph(
                     type="line",
@@ -79,25 +77,26 @@ def _main_screen():
                     location="Maringa, BR",
                     format="{main_temp:.0f}°{units_temperature} ",
                 ),
-                # Volume(
-                #     background=kanagawa.base02,
-                #     mouse_callbacks={
-                #         "Button3": lazy.spawn("pavucontrol -t 5"),
-                #     },
-                # ),
+                Volume(
+                    background=kanagawa.base02,
+                    mouse_callbacks={
+                        "Button3": lazy.spawn("kitty -e pulsemixer"),
+                    },
+                ),
                 Bluetooth(
                     hci=f"/dev_{BLUETOOTH_DEVICE.replace(':', '_')}",
                     background=kanagawa.base01,
                     fmt="{} ",
                     **POWERLINE_RIGHT,
                 ),
+                Mod(WiFiIcon)(
+                    check_connection_interval=10,
+                    padding=5,
+                    **POWERLINE_RIGHT,
+                ),
                 widget.Systray(
                     background=kanagawa.base0C,
                     fmt="{} ",
-                    **POWERLINE_RIGHT,
-                ),
-                WiFiIcon(
-                    **POWERLINE_RIGHT,
                 ),
             ],
             margin=0,
