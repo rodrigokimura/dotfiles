@@ -37,4 +37,10 @@ source ~/.config/fish/kanagawa.fish
 
 [ -s "/home/rodrigokimura/.jabba/jabba.fish" ]; and source "/home/rodrigokimura/.jabba/jabba.fish"
 
+if set -q NVIM
+    set -g fish_key_bindings fish_default_key_bindings
+else
+    set -g fish_key_bindings fish_vi_key_bindings
+end
+
 greet
