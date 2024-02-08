@@ -84,10 +84,10 @@ def set_colors(c, color: Base16ColorScheme):
     c.colors.tabs.pinned.even.fg = color.base07
     c.colors.tabs.pinned.odd.bg = color.base0B
     c.colors.tabs.pinned.odd.fg = color.base07
-    c.colors.tabs.pinned.selected.even.bg = color.base02
-    c.colors.tabs.pinned.selected.even.fg = color.base05
-    c.colors.tabs.pinned.selected.odd.bg = color.base02
-    c.colors.tabs.pinned.selected.odd.fg = color.base05
+    c.colors.tabs.pinned.selected.even.bg = color.base09
+    c.colors.tabs.pinned.selected.even.fg = color.base07
+    c.colors.tabs.pinned.selected.odd.bg = color.base09
+    c.colors.tabs.pinned.selected.odd.fg = color.base07
     c.colors.tabs.selected.odd.fg = color.base07
     c.colors.tabs.selected.odd.bg = color.base09
     c.colors.tabs.selected.even.fg = color.base07
