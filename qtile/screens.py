@@ -90,7 +90,7 @@ def _main_screen():
                     **POWERLINE_RIGHT,
                 ),
                 Mod(WiFiIcon)(
-                    check_connection_interval=10,
+                    check_connection_interval=0,
                     padding=5,
                     **POWERLINE_RIGHT,
                 ),
