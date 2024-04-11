@@ -2,24 +2,24 @@ gui:
   windowSize: normal
   scrollHeight: 2
   scrollPastBottom: true
-  sidePanelWidth: 0.3333
+  sidePanelWidth: 0.2
   expandFocusedSidePanel: true
-  mainPanelSplitMode: flexible
-  language: auto
+  mainPanelSplitMode: horizontal
+  language: en
   timeFormat: "02 Jan 06"
   shortTimeFormat: "3:04PM"
   mouseEvents: true
   skipDiscardChangeWarning: false
-  skipStashWarning: false
+  skipStashWarning: true
   showFileTree: true
   showListFooter: true
-  showRandomTip: true
+  showRandomTip: false
   showBranchCommitHash: false
   showBottomLine: false
   showCommandLog: false
   nerdFontsVersion: "3"
   commandLogSize: 8
-  splitDiff: auto
+  splitDiff: always
   skipRewordInEditorWarning: false
   border: rounded
   animateExplosion: true
@@ -33,7 +33,6 @@ git:
   overrideGpg: false
   disableForcePushing: false
   parseEmoji: true
-  diffContextSize: 3
 os:
   copyToClipboardCmd: ""
   editPreset: nvim
