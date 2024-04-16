@@ -1,4 +1,3 @@
 function cr
-    set QT_STYLE_OVERRIDE ""
-    cura $(pwd)/$argv[1] &>/dev/null &
+    cura $(pwd)/$argv[1] -platformtheme gtk3 &>/dev/null &
 end
