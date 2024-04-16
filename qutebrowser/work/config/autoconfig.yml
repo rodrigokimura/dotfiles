@@ -6,6 +6,14 @@
 
 config_version: 2
 settings:
+  auto_save.interval:
+    global: 15000
+  colors.tabs.pinned.selected.even.fg:
+    global: '#363646'
+  colors.tabs.pinned.selected.odd.fg:
+    global: '#363646'
+  colors.tabs.selected.even.fg:
+    global: '#363646'
   content.desktop_capture:
     https://teams.microsoft.com: true
   content.media.audio_capture:
@@ -14,6 +22,10 @@ settings:
     https://teams.microsoft.com: true
   content.media.video_capture:
     https://teams.microsoft.com: true
+  content.notifications.enabled:
+    global: true
+  content.notifications.presenter:
+    global: libnotify
   content.pdfjs:
     global: true
   content.register_protocol_handler:
