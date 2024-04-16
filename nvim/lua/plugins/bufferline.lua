@@ -129,6 +129,15 @@ return {
         bg = palette_colors.autumnGreen,
         fg = palette_colors.sumiInk0,
       },
+      modified_selected = {
+        bg = palette_colors.autumnGreen,
+        fg = palette_colors.sumiInk0,
+      },
+      duplicate_selected = {
+        bg = palette_colors.autumnGreen,
+        fg = palette_colors.sumiInk0,
+        italic = true,
+      },
     }
     bl.setup(opts)
     -- Fix bufferline when restoring a session
