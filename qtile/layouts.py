@@ -219,7 +219,7 @@ class Max(max.Max):
             focus_right_screen(self.group.qtile)
 
 
-BORDER_WIDTH = 2
+BORDER_WIDTH = 3
 
 
 layouts = [
@@ -228,8 +228,8 @@ layouts = [
         border_normal=kanagawa.base0D,
         border_width=BORDER_WIDTH,
         border_on_single=True,
-        margin=3,
-        margin_on_single=5,
+        margin=5,
+        margin_on_single=15,
         wrap_focus_columns=False,
         wrap_focus_rows=False,
         wrap_focus_stacks=False,
@@ -238,6 +238,6 @@ layouts = [
         border_focus=kanagawa.base09,
         border_normal=kanagawa.base0D,
         border_width=BORDER_WIDTH,
-        margin=5,
+        margin=15,
     ),
 ]

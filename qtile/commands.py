@@ -36,21 +36,16 @@ work_browser = Command(
 
 commands = [
     Command("nvim", "kitty -e nvim", "Launch Neovim"),
-    # Command("code", "code", "Launch VSCode"),
     Command("browser", "qutebrowser", "Launch qutebrowser"),
     work_browser,
-    Command("chrome", "google-chrome-stable", "Launch Chrome"),
     Command(
         "edge",
         f'microsoft-edge-stable --proxy-server="http://{proxy_address};https://{proxy_address}"',
         "Launch Edge using proxy",
     ),
     Command("firefox", "firefox", "Launch firefox"),
-    Command("logseq", "logseq", "Launch Logseq"),
     Command("postman", "postman", "Launch Postman"),
-    Command("slack", "slack", "Launch Slack"),
     Command("discord", "discord", "Launch Discord"),
-    Command("audio", "pulsemixer", "Launch Audio Settings"),
     Command("spotify", "flatpak run com.spotify.Client", "Launch Spotify"),
     Command("freecad", "freecad", "Launch Freecad"),
     open_calendar,
