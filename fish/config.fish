@@ -25,6 +25,8 @@ alias vi="nvim"
 alias vim="nvim"
 alias config="cd $HOME/.config && nvim"
 
+alias zj="zellij"
+
 export EDITOR="nvim"
 
 export PYENV_ROOT="$HOME/.pyenv"
@@ -43,4 +45,4 @@ else
     set -g fish_key_bindings fish_vi_key_bindings
 end
 
-greet
+zoxide init fish | source
