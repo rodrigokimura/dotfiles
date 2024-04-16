@@ -3,7 +3,7 @@ return {
   {
     "rebelot/kanagawa.nvim",
     opts = {
-      transparent = true,
+      transparent = false,
       commentstyle = { italic = true },
       overrides = function(colors)
         return {
@@ -17,20 +17,10 @@ return {
       kanagawa.load("wave")
     end,
   },
-  {
-    "folke/tokyonight.nvim",
-    opts = {
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
-      },
-    },
-  },
   -- {
-  --   "LazyVim/LazyVim",
+  --   "folke/tokyonight.nvim",
   --   opts = {
-  --     colorscheme = "tokyonight",
+  --     transparent = false,
   --   },
   -- },
 }
